@@ -268,9 +268,14 @@ def normalize_key(key: str) -> str:
 def summarize_value(val):
     """Convert HDF5 dataset values to a concise string for the cell."""
     if isinstance(val, (np.ndarray,)):
+        if val.size == 0:
+            return None
         if val.size == 1:
             return float(val.flat[0])
-        return f"array{list(val.shape)}: [{val.flat[0]:.4g} … {val.flat[-1]:.4g}]"
+        try:
+            return f"array{list(val.shape)}: [{val.flat[0]:.4g} … {val.flat[-1]:.4g}]"
+        except Exception:
+            return f"array{list(val.shape)}"
     if isinstance(val, bytes):
         return val.decode("utf-8", errors="replace")
     if isinstance(val, (np.floating,)):
@@ -303,7 +308,10 @@ def extract_from_h5(file_bytes: bytes, filename: str) -> dict:
                 nk = normalize_key(name.split("/")[-1])
                 master = ALIASES.get(nk)
                 if master and row[master] is None:
-                    row[master] = summarize_value(obj[()])
+                    try:
+                        row[master] = summarize_value(obj[()])
+                    except Exception:
+                        pass
 
         f.visititems(collect)
 
@@ -471,7 +479,12 @@ def dump_h5_structure(file_bytes: bytes) -> list[dict]:
                 nk = normalize_key(name.split("/")[-1])
                 try:
                     val = obj[()]
-                    sample = str(val.flat[0]) if hasattr(val, "flat") else str(val)
+                    if isinstance(val, np.ndarray) and val.size == 0:
+                        sample = "<empty array>"
+                    elif hasattr(val, "flat"):
+                        sample = str(val.flat[0])
+                    else:
+                        sample = str(val)
                 except Exception:
                     sample = "<unreadable>"
                 records.append({
@@ -600,4 +613,3 @@ If a field isn't found, the cell is marked **null** (highlighted in yellow in Ex
 under the `ALIASES` dictionary.
             """
         )
-
