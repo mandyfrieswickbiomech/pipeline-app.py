@@ -58,81 +58,203 @@ MASTER_COLUMNS = [
     "Nonlinearity Metrics",
 ]
 
-# Key aliases: map common HDF5 dataset/attribute names → master column names
+# Key aliases: map HDF5 dataset/attribute names → master column names
 ALIASES = {
-    # Date
+    # ── Date Performed ───────────────────────────────────────────────────────
     "date": "Date Performed",
     "date_performed": "Date Performed",
+    "datetime": "Date Performed",
+    "start_time_iso": "Date Performed",
+    "timestamp": "Date Performed",
+    "acquisition_start": "Date Performed",
     "experiment_date": "Date Performed",
     "exp_date": "Date Performed",
-    # Species
+
+    # ── Species / System ─────────────────────────────────────────────────────
     "species": "Species / System",
+    "genus_species": "Species / System",
+    "organism": "Species / System",
     "system": "Species / System",
     "species_system": "Species / System",
-    "organism": "Species / System",
-    # Specimen
+    # your file contains "Micropterus nigricans" (bass) — genus + species fields
+    "genus": "Species / System",
+
+    # ── Specimen ID ──────────────────────────────────────────────────────────
     "specimen_id": "Specimen ID",
     "specimen": "Specimen ID",
     "sample_id": "Specimen ID",
     "id": "Specimen ID",
-    # Condition
+
+    # ── Experimental Condition ───────────────────────────────────────────────
     "condition": "Experimental Condition",
+    "prep_condition": "Experimental Condition",
     "experimental_condition": "Experimental Condition",
-    "exp_condition": "Experimental Condition",
+    "test_type": "Experimental Condition",         # e.g. "isometric"
+    "isometric_mode": "Experimental Condition",
+    "simulation_mode": "Experimental Condition",
+    "protocol_metadata": "Experimental Condition",
+    "config_name": "Experimental Condition",
+    "block_sequence": "Experimental Condition",
     "treatment": "Experimental Condition",
-    # Morphology
+
+    # ── Length ───────────────────────────────────────────────────────────────
     "length": "Length",
+    "fishlen": "Length",                            # fishlen_ in your file
+    "fishlen_": "Length",
+    "test_segment_length_mm": "Length",
+    "test_segment_position_mm": "Length",
+    "xsec_height": "Length",
+    "xsec_width": "Length",
+
+    # ── Cross-Sectional Area ─────────────────────────────────────────────────
     "cross_sectional_area": "Cross-Sectional Area",
     "csa": "Cross-Sectional Area",
     "area": "Cross-Sectional Area",
+    "specimen_geometry_heights_mm": "Cross-Sectional Area",
+    "specimen_geometry_depths_mm": "Cross-Sectional Area",
+
+    # ── Second Moment of Area (I) ────────────────────────────────────────────
     "second_moment_of_area": "Second Moment of Area (I)",
     "moment_of_area": "Second Moment of Area (I)",
-    "i": "Second Moment of Area (I)",
-    # Forces
+    "specimen_moi_specimen": "Second Moment of Area (I)",
+    "i_total_system": "Second Moment of Area (I)",
+
+    # ── Force ────────────────────────────────────────────────────────────────
     "force": "Force",
+    "forcetorque": "Force",
+    "forcetorque_corrected": "Force",
+    "forcetorque_raw": "Force",
+    "mean_xforce_stim": "Force",
+
+    # ── Torque ───────────────────────────────────────────────────────────────
     "torque": "Torque",
+    "primary_torque_corrected": "Torque",
+    "primary_torque_raw": "Torque",
+    "inertial_torque_specimen_primary": "Torque",
+    "inertial_torque_system_primary": "Torque",
+    "inertial_torque_total_primary": "Torque",
+
+    # ── Stress ───────────────────────────────────────────────────────────────
     "stress": "Stress",
+
+    # ── Muscle Force ─────────────────────────────────────────────────────────
     "muscle_force": "Muscle Force",
-    # Kinematics
+    "recruitment": "Muscle Force",
+    "stim_state": "Muscle Force",
+
+    # ── Strain ───────────────────────────────────────────────────────────────
     "strain": "Strain",
+    "strain_pct": "Strain",
+
+    # ── Strain Rate ──────────────────────────────────────────────────────────
     "strain_rate": "Strain Rate",
+    "amp_step_vel": "Strain Rate",
+    "velocity_exponent": "Strain Rate",
+
+    # ── Curvature ────────────────────────────────────────────────────────────
     "curvature": "Curvature",
+    "curvature_1_per_m": "Curvature",
+
+    # ── Angular Displacement ─────────────────────────────────────────────────
     "angular_displacement": "Angular Displacement",
-    # Stiffness
+    "angle_measured": "Angular Displacement",
+    "angle_cmd": "Angular Displacement",
+    "anglevel_cmd": "Angular Displacement",
+    "target_deg": "Angular Displacement",
+    "max_commanded_rotation_deg": "Angular Displacement",
+    "ramp_from_deg": "Angular Displacement",
+
+    # ── Elastic Modulus (E) ──────────────────────────────────────────────────
     "elastic_modulus": "Elastic Modulus (E)",
     "modulus": "Elastic Modulus (E)",
     "young_modulus": "Elastic Modulus (E)",
-    "e": "Elastic Modulus (E)",
+    "simulation_material": "Elastic Modulus (E)",
+
+    # ── Flexural Stiffness (EI) ──────────────────────────────────────────────
     "flexural_stiffness": "Flexural Stiffness (EI)",
     "ei": "Flexural Stiffness (EI)",
+    "force_length_results": "Flexural Stiffness (EI)",
+
+    # ── Angular Stiffness ────────────────────────────────────────────────────
     "angular_stiffness": "Angular Stiffness",
+
+    # ── Damping ──────────────────────────────────────────────────────────────
     "damping": "Damping",
-    # Frequency
+
+    # ── Natural Frequency ────────────────────────────────────────────────────
     "natural_frequency": "Natural Frequency",
+    "daq_ao_do_sample_rate_hz": "Natural Frequency",
+
+    # ── Resonance Frequency ──────────────────────────────────────────────────
     "resonance_frequency": "Resonance Frequency",
+    "sono_internal_rate": "Resonance Frequency",
+
+    # ── Frequency Response ───────────────────────────────────────────────────
     "frequency_response": "Frequency Response",
+
+    # ── Transfer Function ────────────────────────────────────────────────────
     "transfer_function": "Transfer Function",
-    # Activation
+
+    # ── Activation Timing ────────────────────────────────────────────────────
     "activation_timing": "Activation Timing",
     "activation": "Activation Timing",
+    "stim_onset_s": "Activation Timing",
+    "stim_t0": "Activation Timing",
+    "stim_t1": "Activation Timing",
+    "stim_duration_s": "Activation Timing",
+    "t_active_start": "Activation Timing",
+    "t_active_end": "Activation Timing",
+    "prestim_time": "Activation Timing",
+    "poststim_time": "Activation Timing",
+
+    # ── Phase ────────────────────────────────────────────────────────────────
     "phase": "Phase",
+    "stim_side": "Phase",
+    "bilateral_sequential_left_frac": "Phase",
+    "prepoststim_sep": "Phase",
+    "prepoststim_dur": "Phase",
+
+    # ── Duty Cycle ───────────────────────────────────────────────────────────
     "duty_cycle": "Duty Cycle",
-    # Muscle mechanics
+    "pulse_width_ms": "Duty Cycle",
+    "stim_pulse_rate": "Duty Cycle",
+
+    # ── Length–Tension Data ──────────────────────────────────────────────────
     "length_tension": "Length–Tension Data",
+    "isometric_final": "Length–Tension Data",
+    "isometric_initial": "Length–Tension Data",
+    "isometric_num_steps": "Length–Tension Data",
+    "isometric_stim_params": "Length–Tension Data",
+
+    # ── Force–Velocity Data ──────────────────────────────────────────────────
     "force_velocity": "Force–Velocity Data",
+
+    # ── Work / Power Output ──────────────────────────────────────────────────
     "work": "Work / Power Output",
     "power": "Work / Power Output",
     "power_output": "Work / Power Output",
+
+    # ── Efficiency / Energetic Cost ──────────────────────────────────────────
     "efficiency": "Efficiency / Energetic Cost",
     "energetic_cost": "Efficiency / Energetic Cost",
-    # Advanced
+
+    # ── Passive vs Active Stiffness ──────────────────────────────────────────
     "passive_stiffness": "Passive vs Active Stiffness",
     "active_stiffness": "Passive vs Active Stiffness",
     "passive_vs_active_stiffness": "Passive vs Active Stiffness",
+
+    # ── Local Stiffness ──────────────────────────────────────────────────────
     "local_stiffness": "Local Stiffness",
+    "specimen_geometry_positions_mm": "Local Stiffness",
+
+    # ── Local Damping ────────────────────────────────────────────────────────
     "local_damping": "Local Damping",
+
+    # ── Viscoelastic Decomposition ───────────────────────────────────────────
     "viscoelastic": "Viscoelastic Decomposition",
     "viscoelastic_decomposition": "Viscoelastic Decomposition",
+
+    # ── Nonlinearity Metrics ─────────────────────────────────────────────────
     "nonlinearity": "Nonlinearity Metrics",
     "nonlinearity_metrics": "Nonlinearity Metrics",
 }
@@ -317,8 +439,79 @@ uploaded_files = st.file_uploader(
     accept_multiple_files=True,
 )
 
+def dump_h5_structure(file_bytes: bytes) -> list[dict]:
+    """Return a flat list of every key, type, shape, and sample value in an H5 file."""
+    records = []
+    with h5py.File(BytesIO(file_bytes), "r") as f:
+        # Root attributes
+        for k, v in f.attrs.items():
+            records.append({
+                "Path": f"/ (attr) → {k}",
+                "Type": "attribute",
+                "Shape": str(np.array(v).shape) if hasattr(v, "__len__") else "scalar",
+                "Sample Value": str(v)[:120],
+                "Normalized Key": normalize_key(k),
+                "Mapped To": ALIASES.get(normalize_key(k), "—"),
+            })
+
+        def visitor(name, obj):
+            # Attributes on this object
+            for k, v in obj.attrs.items():
+                nk = normalize_key(k)
+                records.append({
+                    "Path": f"{name} (attr) → {k}",
+                    "Type": "attribute",
+                    "Shape": str(np.array(v).shape) if hasattr(v, "__len__") else "scalar",
+                    "Sample Value": str(v)[:120],
+                    "Normalized Key": nk,
+                    "Mapped To": ALIASES.get(nk, "—"),
+                })
+            # Dataset itself
+            if isinstance(obj, h5py.Dataset):
+                nk = normalize_key(name.split("/")[-1])
+                try:
+                    val = obj[()]
+                    sample = str(val.flat[0]) if hasattr(val, "flat") else str(val)
+                except Exception:
+                    sample = "<unreadable>"
+                records.append({
+                    "Path": name,
+                    "Type": "dataset",
+                    "Shape": str(obj.shape),
+                    "Sample Value": sample[:120],
+                    "Normalized Key": nk,
+                    "Mapped To": ALIASES.get(nk, "—"),
+                })
+
+        f.visititems(visitor)
+    return records
+
+
 if uploaded_files:
     st.markdown(f"**{len(uploaded_files)} file(s) uploaded.** Processing…")
+
+    # ── Debug: H5 Structure Inspector ────────────────────────────────────────
+    with st.expander("🔍 Inspect H5 file structure (use this if fields are missing)", expanded=False):
+        inspect_file = st.selectbox("Select file to inspect", [uf.name for uf in uploaded_files])
+        for uf in uploaded_files:
+            if uf.name == inspect_file:
+                raw = uf.read()
+                uf.seek(0)  # reset so extract_from_h5 can read it again
+                try:
+                    records = dump_h5_structure(raw)
+                    struct_df = pd.DataFrame(records)
+                    unmapped = struct_df[struct_df["Mapped To"] == "—"]
+                    mapped = struct_df[struct_df["Mapped To"] != "—"]
+                    st.markdown(f"**{len(records)} total keys** — ✅ {len(mapped)} mapped, ❌ {len(unmapped)} unmapped")
+                    st.markdown("**All keys found in this file:**")
+                    st.dataframe(struct_df, use_container_width=True)
+                    if not unmapped.empty:
+                        st.markdown("**❌ Unmapped keys** (copy these names and share them so the alias table can be updated):")
+                        st.dataframe(unmapped[["Path", "Normalized Key", "Sample Value"]], use_container_width=True)
+                except Exception as e:
+                    st.error(f"Could not read structure: {e}")
+                break
+
     rows = []
     errors = []
 
@@ -328,6 +521,7 @@ if uploaded_files:
     for i, uf in enumerate(uploaded_files):
         status.text(f"Processing: {uf.name}")
         try:
+            uf.seek(0)
             row = extract_from_h5(uf.read(), uf.name)
             rows.append(row)
         except Exception as e:
@@ -406,3 +600,4 @@ If a field isn't found, the cell is marked **null** (highlighted in yellow in Ex
 under the `ALIASES` dictionary.
             """
         )
+
